@@ -1,6 +1,7 @@
 version: '2'
 
 volumes:
+    persistent:
     logs:
         driver: local
 
@@ -16,3 +17,26 @@ services:
         volumes:
             - .:/var/www
             - logs:/var/www/logs
+    db:
+        image: mysql:latest
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_DATABASE: woodpile
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: admin
+            MYSQL_ROOT_PASSWORD: root
+        volumes:
+            - persistent:/var/lib/mysql
+        networks:
+            - default
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin #with mysql v8, need work-around for native_password https://stackoverflow.com/a/50437307/1231466
+        links:
+            - db:db
+        ports:
+            - 8000:80
+        environment:
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: admin
+            MYSQL_ROOT_PASSWORD: root
