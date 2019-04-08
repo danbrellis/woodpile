@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <header>
+      <div id="main-logo">Woodpile</div>
+    </header>
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
@@ -15,6 +18,11 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+#main-logo {
+  font-size: 2em;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 #nav {
   padding: 30px;
