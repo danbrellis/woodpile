@@ -11,7 +11,7 @@ namespace Woodpile\Entities;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="BurnPeriodRepository")
+ * @ORM\Entity
  * @ORM\Table(name="burnPeriods")
  */
 class BurnPeriod
@@ -35,7 +35,7 @@ class BurnPeriod
     protected $endBurn;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Stack", inversedBy="addBurnPeriod")
+     * @ORM\ManyToOne(targetEntity="Stack", inversedBy="burnHistory")
      * @var Stack
      **/
     protected $stack;

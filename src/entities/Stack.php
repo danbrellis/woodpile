@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Boolean;
 
 /**
- * @ORM\Entity(repositoryClass="StackRepository")
+ * @ORM\Entity
  * @ORM\Table(name="stacks")
  */
 class Stack
@@ -86,7 +86,7 @@ class Stack
     protected $burnHistory;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Pile", inversedBy="addStack")
+     * @ORM\ManyToOne(targetEntity="Pile", inversedBy="stacks")
      * @var Pile
      **/
     protected $pile;

@@ -3,17 +3,21 @@
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Cache\FilesystemCache;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\ORM\Tools\Setup;
 use Slim\Container;
+use Slim\Views\PhpRenderer;
 
 $container = $app->getContainer();
 
 // view renderer
-$container['renderer'] = function (Container $c): Slim\Views\PhpRenderer {
+$container['renderer'] = function (Container $c): PhpRenderer {
     $settings = $c->get('settings')['renderer'];
-    return new Slim\Views\PhpRenderer($settings['template_path']);
+    return new PhpRenderer($settings['template_path']);
 };
 
 // monolog
@@ -49,4 +53,12 @@ $container[EntityManager::class] = function (Container $c): EntityManager {
         $c['settings']['doctrine']['connection'],
         $config
     );
+};
+
+// serializer
+$container['serializer'] = function (): Serializer {
+    $encoders = [new JsonEncoder()];
+    $normalizers = [new ObjectNormalizer()];
+
+    return new Serializer($normalizers, $encoders);
 };
