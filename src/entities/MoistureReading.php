@@ -11,7 +11,7 @@ namespace Woodpile\Entities;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="MoistureReadingRepository")
+ * @ORM\Entity
  * @ORM\Table(name="moistureReadings")
  */
 class MoistureReading
@@ -33,7 +33,7 @@ class MoistureReading
     protected $reading;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Stack", inversedBy="addMoistureReading")
+     * @ORM\ManyToOne(targetEntity="Stack", inversedBy="moistureHistory")
      * @var Stack
      **/
     protected $stack;

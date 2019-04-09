@@ -9,10 +9,11 @@
 namespace Woodpile\Entities;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="PileRepository")
+ * @ORM\Entity
  * @ORM\Table(name="piles")
  */
 class Pile
@@ -30,8 +31,8 @@ class Pile
     protected $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Stack", mappedBy="stack")
-     * @var Stack[] An ArrayCollection of Stack objects.
+     * @ORM\OneToMany(targetEntity="Stack", mappedBy="pile")
+     * @var ArrayCollection|Stack[] An ArrayCollection of Stack objects.
      **/
     protected $stacks;
 
@@ -65,9 +66,9 @@ class Pile
     }
 
     /**
-     * @return ArrayCollection[]
+     * @return Collection
      */
-    public function getStacks(): array
+    public function getStacks(): Collection
     {
         return $this->stacks;
     }
