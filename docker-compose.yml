@@ -10,7 +10,7 @@ services:
         build: .
         image: php:latest
         working_dir: /var/www
-        command: php -S 0.0.0.0:8080 -t public
+        command: php -S 0.0.0.0:8080 -t api
         environment:
             docker: "true"
         depends_on:
