@@ -58,7 +58,12 @@ $container[EntityManager::class] = function (Container $c): EntityManager {
 // serializer
 $container['serializer'] = function (): Serializer {
     $encoders = [new JsonEncoder()];
-    $normalizers = [new ObjectNormalizer()];
+    $defaultContext = [
+        \Symfony\Component\Serializer\Normalizer\AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+            return $object->getId();
+        },
+    ];
+    $normalizers = [new ObjectNormalizer(null, null, null, null, null, null, $defaultContext)];
 
     return new Serializer($normalizers, $encoders);
 };
