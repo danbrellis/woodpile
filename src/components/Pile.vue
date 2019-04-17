@@ -1,29 +1,32 @@
 <template>
   <div class="hello">
-    <h1>Piles</h1>
-    <div class="piles">
-      <div v-for="pile in state.piles" :key="pile.id" class="pile">
-        <router-link :to="{ name: 'pile', params: { pileId: pile.id } }">{{
-          pile.name
-        }}</router-link>
+    <h1>{{ pile.name }}</h1>
+    <router-link
+      v-if="Object.entries(pile).length"
+      :to="{ name: 'addStack', params: { pileId: pile.id } }"
+      >Add stack</router-link
+    >
+    <div class="stacks" v-if="pile.stacks && pile.stacks.length">
+      <div v-for="stack in pile.stacks" v-bind:key="stack.id">
+        {{ stack.species }}<br />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import store from "@/store.js";
-
 export default {
-  name: "Piles",
+  name: "Pile",
   data() {
     return {
-      state: store.state,
       errors: []
     };
   },
   props: {
-    msg: String
+    pile: {
+      type: Object,
+      required: true
+    }
   }
 };
 </script>

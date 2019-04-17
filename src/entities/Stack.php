@@ -10,8 +10,8 @@ namespace Woodpile\Entities;
 //https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/tutorials/getting-started.html
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Types\Boolean;
 
 /**
  * @ORM\Entity
@@ -20,25 +20,26 @@ use phpDocumentor\Reflection\Types\Boolean;
 class Stack
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue
+     * @ORM\Id @ORM\Column(type="integer", unique=true)
+     * @ORM\GeneratedValue
      * @var int
      */
     protected $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     protected $species;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      */
     protected $dateFelled;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date", nullable=true)
      * @var \DateTime
      */
     protected $dateStacked;
@@ -50,8 +51,8 @@ class Stack
     protected $moistureHistory;
 
     /**
-     * @ORM\Column(type="boolean")
-     * @var boolean
+     * @ORM\Column(type="boolean", options={"default":0})
+     * @var bool
      */
     protected $isSplit;
 
@@ -74,8 +75,8 @@ class Stack
     protected $depth;
 
     /**
-     * @ORM\Column(type="boolean")
-     * @var Boolean
+     * @ORM\Column(type="boolean", options={"default":0})
+     * @var bool
      */
     protected $isBurnable;
 
@@ -109,26 +110,42 @@ class Stack
         $this->species = $name;
     }
 
-    public function getDateFelled(){
+    /**
+     * @return \DateTime|null
+     */
+    public function getDateFelled()
+    {
         return $this->dateFelled;
     }
 
-    public function setDateFelled(\DateTime $date){
-        $this->dateFelled = $date;
-    }
-
-    public function getDateStacked(){
-        return $this->dateStacked;
-    }
-
-    public function setDateStacked(\DateTime $date){
-        $this->dateStacked = $date;
+    /**
+     * @param \DateTime|null $dateFelled
+     */
+    public function setDateFelled($dateFelled): void
+    {
+        $this->dateFelled = $dateFelled;
     }
 
     /**
-     * @return ArrayCollection
+     * @return \DateTime|null
      */
-    public function getMoistureHistory(): ArrayCollection
+    public function getDateStacked()
+    {
+        return $this->dateStacked;
+    }
+
+    /**
+     * @param \DateTime|null $dateStacked
+     */
+    public function setDateStacked($dateStacked): void
+    {
+        $this->dateStacked = $dateStacked;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getMoistureHistory(): Collection
     {
         return $this->moistureHistory;
     }
@@ -141,7 +158,7 @@ class Stack
         return $this->isSplit;
     }
 
-    public function setIsSplit(Boolean $boolean){
+    public function setIsSplit(bool $boolean){
         $this->isSplit = $boolean;
     }
 
@@ -173,14 +190,14 @@ class Stack
         return $this->isBurnable;
     }
 
-    public function setIsBurnable(Boolean $boolean){
+    public function setIsBurnable(bool $boolean){
         $this->isBurnable = $boolean;
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getBurnHistory(): ArrayCollection
+    public function getBurnHistory(): Collection
     {
         return $this->burnHistory;
     }

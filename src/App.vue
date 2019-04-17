@@ -7,9 +7,33 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <router-view />
+    <router-view v-if="state.loaded" />
+    <div id="app-messages">
+      <div
+        v-for="alert in state.alerts"
+        v-bind:key="alert.message"
+        class="notice"
+        :class="alert.type"
+      >
+        {{ alert.message }}
+      </div>
+    </div>
   </div>
 </template>
+
+<script>
+import store from "@/store.js";
+export default {
+  data() {
+    return {
+      state: store.state
+    };
+  },
+  beforeCreate() {
+    store.loadAllPiles();
+  }
+};
+</script>
 
 <style lang="scss">
 #app {
