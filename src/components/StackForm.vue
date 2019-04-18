@@ -117,17 +117,17 @@ export default {
           console.log(response);
 
           //get most up-to-date pile for store
-          store.addPileById(response.data.stack.pile.id);
+          store.addPileById(response.data.stack.pile.id).then(() => {
+            vm.loading = false;
 
-          vm.loading = false;
+            //show success message
+            store.addAlert("Stack added!", "success");
 
-          //show success message
-          store.addAlert("Stack added!", "success");
-
-          //route back to pile of respective stack
-          this.$router.push({
-            name: "pile",
-            params: { pileId: this.pile.id }
+            //route back to pile of respective stack
+            this.$router.push({
+              name: "pile",
+              params: { pileId: this.pile.id }
+            });
           });
         })
         .catch(e => {

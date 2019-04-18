@@ -26,17 +26,21 @@ export default {
     });
   },
   addPileById(id) {
-    axios
-      .get(`/api/pile/${id}`)
-      .then(response => {
-        // JSON responses are automatically parsed.
-        this.addPile(response.data);
-      })
-      .catch(e => {
-        throw new TypeError(
-          `Unable to fetch pile from API server with ID ${id}. ${e}`
-        );
-      });
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`/api/pile/${id}`)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.addPile(response.data);
+          resolve(response);
+        })
+        .catch(e => {
+          reject(e);
+          throw new TypeError(
+            `Unable to fetch pile from API server with ID ${id}. ${e}`
+          );
+        });
+    });
   },
   addPile(pile) {
     this.state.piles[pile.id] = pile;
