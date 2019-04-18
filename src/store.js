@@ -6,7 +6,7 @@ export default {
     piles: {},
     activePile: null,
     activeStack: null,
-    alerts: [],
+    alerts: {},
     loaded: false
   },
   loadAllPiles() {
@@ -68,9 +68,14 @@ export default {
     return this.state.piles[this.state.activePile];
   },
   addAlert(msg, type) {
-    this.state.alerts.push({
+    this.state.alerts[+new Date()] = {
       message: msg,
       type: type
-    });
+    };
+    this.state.alerts = Object.assign({}, this.state.alerts);
+  },
+  removeAlert(key) {
+    delete this.state.alerts[key];
+    this.state.alerts = Object.assign({}, this.state.alerts);
   }
 };

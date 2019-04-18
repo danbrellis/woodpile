@@ -8,22 +8,25 @@
       <router-link to="/about">About</router-link>
     </div>
     <router-view v-if="state.loaded" />
-    <div id="app-messages">
-      <div
-        v-for="alert in state.alerts"
-        v-bind:key="alert.message"
-        class="notice"
-        :class="alert.type"
-      >
-        {{ alert.message }}
-      </div>
+    <div class="alerts" id="app-alerts">
+      <alert
+        v-for="(value, key) in state.alerts"
+        :alert="value"
+        :id="key"
+        v-bind:key="key"
+        @remove-alert="removeAlert"
+      ></alert>
     </div>
   </div>
 </template>
 
 <script>
 import store from "@/store.js";
+import alert from "@/components/Alert";
 export default {
+  components: {
+    alert
+  },
   data() {
     return {
       state: store.state
@@ -31,6 +34,11 @@ export default {
   },
   beforeCreate() {
     store.loadAllPiles();
+  },
+  methods: {
+    removeAlert(alertId) {
+      store.removeAlert(alertId);
+    }
   }
 };
 </script>
